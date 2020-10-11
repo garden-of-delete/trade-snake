@@ -1,0 +1,3 @@
+[submodule "trade-snake-gui"]
+	path = trade-snake-gui
+	url = ./trade-snake-gui/
