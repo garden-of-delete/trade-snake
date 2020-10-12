@@ -18,8 +18,8 @@ while True:
         # translate ids
         json_msg["system_id_name"] = r.get(int(json_msg["system_id"])).decode('utf-8')
         json_msg["type_id_name"] = r.get(int(json_msg["type_id"])).decode('utf-8')
-        #r.set("type_id_name",r.get(int(json_msg["type_id"])))
-        #r.set("system_id_name", r.get(int(json_msg["system_id"])))
+        # r.set("type_id_name",r.get(int(json_msg["type_id"])))
+        # r.set("system_id_name", r.get(int(json_msg["system_id"])))
         # route message
         if json_msg["is_buy_order"]:
             buy_producer.send(json.dumps(json_msg))

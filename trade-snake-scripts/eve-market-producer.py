@@ -1,6 +1,5 @@
 import requests
 import pulsar
-import time
 from pulsar.schema import *
 import json
 import time
@@ -16,19 +15,19 @@ region_ids = requests.get("https://esi.evetech.net/latest/universe/regions/?data
 region_ids = region_ids.text[1:-1].split(',')
 region_ids = [x for x in map(int,region_ids) if x < 11000000]
 
-while(True):
+while True:
     current_market_stats = {'market_pull_index': 0, 'n_orders': 0, 'pull_time': time.time()}
     payload = {'datasource':'tranquility','ordertype':'all','page':'1'}
     for region in region_ids:
         page = 1
-        n_pages = 2
+        n_pages = 1
         while page < n_pages + 1:
             payload['page'] = str(page)
             r = requests.get("https://esi.evetech.net/latest/markets/" + repr(region) + "/orders/", payload)
             n_pages = int(r.headers['x-pages'])
-            for k in r.json():
+            for i in r.json():
                 #print(json.dumps(k))
-                producer.send(json.dumps(k))
+                producer.send(json.dumps(i))
                 current_market_stats['n_orders'] += 1
             page += 1
     current_market_stats['market_pull_index'] += 1
