@@ -3,7 +3,7 @@ import json
 import redis
 
 
-class Pf_sort_raw_orders(Function):
+class PfSortRawOrders(Function):
 
     def __init__(self):
         self.r = redis.Redis(host='ec2-54-215-48-242.us-west-1.compute.amazonaws.com', port=6379, db=1)
