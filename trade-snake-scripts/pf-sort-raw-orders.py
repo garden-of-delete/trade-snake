@@ -13,10 +13,15 @@ class PfSortRawOrders(Function):
     def process(self, item, context):
         json_msg = json.loads(item)
         # translate ids
-        json_msg["system_id_name"] = self.r.get(int(json_msg["system_id"])).decode('utf-8')
-        json_msg["type_id_name"] = self.r.get(int(json_msg["type_id"])).decode('utf-8')
-        # r.set("type_id_name",r.get(int(json_msg["type_id"])))
-        # r.set("system_id_name", r.get(int(json_msg["system_id"])))
+        try:
+            json_msg["system_id_name"] = self.r.get(int(json_msg["system_id"])).decode('utf-8')
+            json_msg["type_id_name"] = self.r.get(int(json_msg["type_id"])).decode('utf-8')
+        except Exception as inst:
+            print(type(inst))  # the exception instance
+            print(inst.args)  # arguments stored in .args
+            print(inst)
+            # Message failed to be processed
+            print("Error: Message processing failed")
         # route message
         if json_msg["is_buy_order"]:
             context.publish(self.buy_topic, item)
