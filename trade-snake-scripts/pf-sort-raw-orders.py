@@ -6,7 +6,7 @@ import redis
 class PfSortRawOrders(Function):
 
     def __init__(self):
-        self.r = redis.Redis(host='ec2-54-215-48-242.us-west-1.compute.amazonaws.com', port=6379, db=1)
+        self.r = redis.Redis(host='ec2-54-215-48-242.us-west-1.compute.amazonaws.com', port=6379, db=0, password='insight')
         self.buy_topic = '/public/default/buy-orders'
         self.sell_topic = '/public/default/sell-orders'
 
