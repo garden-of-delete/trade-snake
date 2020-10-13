@@ -1,6 +1,6 @@
 import redis
 
-r = redis.Redis(host='localhost', port=6379, db=0, password='insight')
+r = redis.Redis(host='ec2-54-215-48-242.us-west-1.compute.amazonaws.com', port=6379, db=0, password='insight')
 
 file_map_region_ids = open("mapRegionIds.tsv",'r')
 file_map_system_ids = open("mapSystemIds.tsv",'r')

@@ -24,6 +24,6 @@ class PfSortRawOrders(Function):
             print("Error: Message processing failed")
         # route message
         if json_msg["is_buy_order"]:
-            context.publish(self.buy_topic, item)
+            context.publish(self.buy_topic, json.dumps(json_msg).encode('utf-8'))
         else:
-            context.publish(self.sell_topic, item)
+            context.publish(self.sell_topic, json.dump(json_msg).encode('utf-8'))
