@@ -23,8 +23,10 @@ The key design features of this project:
 ![Banner 3](https://github.com/garden-of-delete/trade-snake/blob/master/images/3.gif)
 
 # Setup
+This project relies on a bare-metal deployment of Apache Pulsar 2.6.1, Redis, Flask, Node, and all dependencies to an AWS cluster. 
+![node layout](https://github.com/garden-of-delete/trade-snake/blob/master/images/node_layout.png)
+
 ## AWS and Environment
-This is focused on a bare-metal deployment of Apache Pulsar 2.6.1 to an AWS cluster. 
 1. Set up the AWS cluster. Either Ubuntu 18/20 or Amazon's AMI 1.x is fine. The node layout referenced by the .conf files included in this repository is:  
 3x t2.large Zookeeper nodes on `10.0.0.11`,`10.0.0.13`, and `10.0.0.6`  
 3x i3.xlarge Bookkeeper nodes on `10.0.0.4`,`10.0.0.8`, and `10.0.0.10`  
