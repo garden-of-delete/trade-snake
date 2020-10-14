@@ -1,7 +1,7 @@
 
 
 # Trade Snake
-A classic situation: there you are, in space, empty cargo hold and some liquid capital burning a hole in your space pockets. 
+A classic situation: there you are, in space, empty cargo hold and some liquid capital burning a hole in your space pocket. 
 What should you buy near your current location, and where should you sell it to maximize your profit? 
 This is the forbidden knowledge the oligarchs of New Eden don't want you to know, and it has a provider: **Trade Snake**.
 
@@ -9,16 +9,16 @@ Trade Snake is a real-time trade identification and tasking system for EVE Onlin
 Trade Snake uses Apache Pulsar to carry out data ingestion of market orders and stream processing of ETL tasks. 
 Redis is used to cache static data required by the ingestion framework,
 but also to identify and serve trades to connected clients.
-Flask acts as a backend API for the ReactJS frontend.
+Flask acts as a backend API for the ReactJS web client.
 
 
 ![Banner 1](https://github.com/garden-of-delete/trade-snake/blob/master/images/1.gif)
 
 The key design features of this project:
-- Enterprise architecture can handle very high message velocity (5000 > new orders / sec).
+- Enterprise architecture can handle very high message velocity (5000 > new orders/sec).
 - Parallelized ingestion framework uses Pulsar functions to implement a microservice architecture.
 - Asynchronous and distributed trade-identification algorithm, while basic, is highly horizontally scalable.
-- Redis implemented as a caching / state service for Pulsar functions, and as a cache for my API.
+- Redis implemented as a caching / state service for Pulsar functions, and as a cache for the API.
 
 ![Banner 3](https://github.com/garden-of-delete/trade-snake/blob/master/images/3.gif)
 
@@ -51,30 +51,46 @@ Start by installing git on each machine (as needed), and pull this repo to your 
         - `bookkeeper.conf` (`apache-pulsar-2.6.1/conf/bookkeeper.conf): Bookie configuration
         - `broker.conf` (`apache-pulsar-2.6.1/conf/broker.conf): Broker configuration
         - `functions-worker.yml` (`apache-pulsar-2.6.1/conf/functions-worker.yml`): Functions worker configuration
-2. Create pulsar functions.
-    - Use .yml
-
+2. Create pulsar functions using the pulsar-admin cli. Each function in the pipeline can be found at `~/trade_snake/trade-snake-scripts/pf-*.py`. 
+   An example:  
+   ```
+   ~/apache-pulsar-2.6.1/bin/pulsar-admin functions create \`  
+   --tenant public \
+   --namespace default \
+   --name pyexclamation \
+   --py exclamation.py \
+   --classname exclamation.ExclamationFunction \
+   --inputs persistent://public/default/raw-orders \
+   --output persistent://public/default/exclamation-output
+   ```
 
 ## Redis
-1. Download Redis [here](https://download.redis.io/releases/redis-6.0.8.tar.gz).
-2. Configure Redis by editing the `Redis`
+Follow these steps:
+    1. Download Redis [here](https://download.redis.io/releases/redis-6.0.8.tar.gz).
+    2. Configure Redis by editing the `redis.conf` file.
 
 ## Flask
-    - Navigate to the backend API subdirectory (`cd ~/trade_snake/trade-snake-flask`)
-    - Use pip to install `flask` and `flask-cors`
-    - Run the backend API with `python application.py`
+Follow these steps:
+    1. Navigate to the backend API subdirectory (`cd ~/trade_snake/trade-snake-flask`)
+    2. Use pip to install `flask` and `flask-cors`
+    3. Run the backend API with `python application.py`
 
 ## Node + React
-    - Navigate to the webclient subdirectory (`cd ~/trade_snake/trade-snake-gui`)
-    - Install node.js (`sudo apt install nodejs`)
-    - Install the Node Package Manager (`sudo apt install npm` followed by `npm i`)
-    - Build the webapp (`npm run build`)
-    - Run the webapp (`npm start`)
+Follow these steps:
+    1. Navigate to the webclient subdirectory (`cd ~/trade_snake/trade-snake-gui`)
+    2. Install node.js (`sudo apt install nodejs`)
+    3. Install the Node Package Manager (`sudo apt install npm` followed by `npm i`)
+    4. Build the webapp (`npm run build`)
+    5. Run the webapp (`npm start`)
 
 ![Banner 2](https://github.com/garden-of-delete/trade-snake/blob/master/images/2.gif)
 
 ## Start-up
-To start the system, first, the pulsar cluster should be started
+To start the system:
+1. Start the redis/node/flask node. Run `~/trade_snake/redis-config/redis-static-data-load.py` to load the eve online static data.
+2. Start the pulsar nodes and run pulsar services (Zookeeper nodes -> Bookie Nodes -> Broker Nodes).
+3. Start the market producer node. Run `~trade_snake/trade-snake-scripts/eve-market-producer.py` to start pulling orders from Eve Online.
+4. Start Flask and React the servers as described in the final step of the "Node + React" and "Flask" sections above. 
 
 # Future
 I would like to explore better algorithms for trade identification that take advantage of Trade Snake's distributed archetecture. If that algorithm relies on trees, even better (gotta stick with the metaphor). 
