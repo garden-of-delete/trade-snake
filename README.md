@@ -66,8 +66,7 @@ Start by installing git on each machine (as needed), and pull this repo to your 
 
 ## Redis
 Follow these steps:
-    1. Download Redis [here](https://download.redis.io/releases/redis-6.0.8.tar.gz).
-    2. Configure Redis by editing the `redis.conf` file.
+    1. Follow the redis setup instructions [here](https://redis.io/topics/quickstart)  
 
 ## Flask
 Follow these steps:
@@ -90,10 +89,4 @@ To start the system:
 1. Start the redis/node/flask node. Run `~/trade_snake/redis-config/redis-static-data-load.py` to load the eve online static data.
 2. Start the pulsar nodes and run pulsar services (Zookeeper nodes -> Bookie Nodes -> Broker Nodes).
 3. Start the market producer node. Run `~trade_snake/trade-snake-scripts/eve-market-producer.py` to start pulling orders from Eve Online.
-4. Start Flask and React the servers as described in the final step of the "Node + React" and "Flask" sections above. 
-
-# Future
-I would like to explore better algorithms for trade identification that take advantage of Trade Snake's distributed archetecture. If that algorithm relies on trees, even better (gotta stick with the metaphor). 
-
-This is an enterprise archetecture, and I would like to 
-
+4. Start Flask and React the servers as described in the final step of the "Node + React" and "Flask" sections above.
