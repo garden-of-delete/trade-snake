@@ -89,4 +89,10 @@ To start the system:
 1. Start the redis/node/flask node. Run `~/trade_snake/redis-config/redis-static-data-load.py` to load the eve online static data.
 2. Start the pulsar nodes and run pulsar services (Zookeeper nodes -> Bookie Nodes -> Broker Nodes).
 3. Start the market producer node. Run `~trade_snake/trade-snake-scripts/eve-market-producer.py` to start pulling orders from Eve Online.
-4. Start Flask and React the servers as described in the final step of the "Node + React" and "Flask" sections above.
+4. Start the Flask and React servers as described in the final step of the "Node + React" and "Flask" sections above.
+
+# Utilities
+A few useful utilities are included:
+    - `build-distance-matrix.py` saves pairwise distances between systems
+    - `sort-raw-orders.py` sorts incoming trades and appends static data from Redis using the Pulsar producer/consumer clients. Much slower than `pf-sort-raw-orders.py`, but doesn't rely on pulsar function workers.
+    - `redis-load-test-trades.py n` loads `n` randomly generated trades into the redis cache. Useful for testing the front end demonstration without the back-end running. 
