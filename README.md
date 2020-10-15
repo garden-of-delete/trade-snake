@@ -1,5 +1,3 @@
-
-
 # Trade Snake
 A classic situation: there you are, in space, empty cargo hold and some liquid capital burning a hole in your space pocket. 
 What should you buy near your current location, and where should you sell it to maximize your profit? 
@@ -21,6 +19,10 @@ The key design features of this project:
 - Redis implemented as a caching / state service for Pulsar functions, and as a cache for the API.
 
 ![Banner 3](https://github.com/garden-of-delete/trade-snake/blob/master/images/3.gif)
+
+# Related Repositories
+### [Trade Snake React Webapp](https://github.com/garden-of-delete/trade-snake-react)  
+### [Trade Snake Flask Backend API](https://github.com/garden-of-delete/trade-snake-flask)
 
 # Setup
 During development this project configured on EC2 instances in AWS and required deployment of Apache Pulsar 2.6.1, Redis, Flask, Node, and all dependencies. The node layout used in this project (shown below) is only one possibility and can be adjusted to meet the needs of other projects.
