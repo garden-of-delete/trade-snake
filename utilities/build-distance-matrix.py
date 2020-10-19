@@ -55,4 +55,3 @@ tasks = [get_distance(output_file, key) for key in keys]
 print("Here we go!")
 loop.run_until_complete(asyncio.wait(tasks))
 loop.close()
-'''
